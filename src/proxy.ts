@@ -34,9 +34,9 @@ export function proxy(req: NextRequest) {
   const ok = token ? verifyHubToken(token, secret, appId).ok : false;
 
   if (!ok) {
-    const to = new URL(lpUrl);
-    to.searchParams.set("from", appId);
-    return NextResponse.redirect(to, 307);
+const to = new URL(lpUrl);
+to.searchParams.set("from", appId); // appId=es-trainer
+return NextResponse.redirect(to, 307);
   }
 
   // OKならアプリ側Cookie発行
