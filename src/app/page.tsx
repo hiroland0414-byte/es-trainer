@@ -13,21 +13,15 @@ const MODES: TopMode[] = [
 
 export default function Page() {
   const router = useRouter();
-  const [selected, setSelected] = useState<TopMode["key"] | "hub" | null>(null);
+  const [selected, setSelected] = useState<TopMode["key"] | null>(null);
 
   const go = (m: TopMode) => {
     setSelected(m.key);
-    // “色が変わったのを見せてから”遷移
     window.setTimeout(() => router.push(m.route), 220);
   };
 
-  // 追加：Hubへ戻る
   const goHub = () => {
-    setSelected("hub");
-    const hubUrl = process.env.NEXT_PUBLIC_HUB_URL ?? "https://kc-lp.vercel.app";
-    window.setTimeout(() => {
-      window.location.href = hubUrl;
-    }, 220);
+    window.location.href = process.env.NEXT_PUBLIC_KC_LP_URL ?? "https://kc-lp.vercel.app";
   };
 
   return (
@@ -40,15 +34,14 @@ export default function Page() {
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-start",
-        paddingTop: 18, // 背景を上に5mm程度見せる
-        paddingLeft: 18, // 背景を左右に5mm程度見せる
+        paddingTop: 18,
+        paddingLeft: 18,
         paddingRight: 18,
         paddingBottom: 20,
         fontFamily:
           'ui-sans-serif, system-ui, -apple-system, "Noto Sans JP", sans-serif',
       }}
     >
-      {/* 背景ベール */}
       <div
         style={{
           position: "fixed",
@@ -59,7 +52,6 @@ export default function Page() {
         }}
       />
 
-      {/* 白枠（周囲に背景が見えるように margin で確保） */}
       <div
         style={{
           width: 390,
@@ -73,7 +65,6 @@ export default function Page() {
           border: "1px solid rgba(255,255,255,0.6)",
         }}
       >
-        {/* ロゴ（左右いっぱい） */}
         <div
           style={{
             width: "100%",
@@ -96,15 +87,7 @@ export default function Page() {
           />
         </div>
 
-        <div
-          style={{
-            textAlign: "center",
-            fontSize: 20,
-            fontWeight: 900,
-            color: "#167a52",
-            marginTop: 2,
-          }}
-        >
+        <div style={{ textAlign: "center", fontSize: 20, fontWeight: 900, color: "#167a52", marginTop: 2 }}>
           E.S.作成基礎トレーナー
         </div>
 
@@ -121,7 +104,6 @@ export default function Page() {
           比較ではなく、視点を切り替えて深く考える
         </div>
 
-        {/* モードボタン：初期白／選択で色 */}
         <div style={{ display: "grid", gap: 14 }}>
           {MODES.map((m) => {
             const active = selected === m.key;
@@ -153,27 +135,21 @@ export default function Page() {
           })}
         </div>
 
-        {/* 追加：アプリ選択へ（UIは“下に足すだけ”） */}
-        <div style={{ marginTop: 14 }}>
+        {/* ★ここだけ変更 */}
+        <div style={{ marginTop: 16, display: "flex", justifyContent: "flex-end" }}>
           <button
             onClick={goHub}
             style={{
-              width: "100%",
-              padding: "14px 0",
-              borderRadius: 22,
+              width: "50%",
+              padding: "12px 0",
+              borderRadius: 18,
               border: "none",
               cursor: "pointer",
               fontSize: 14,
-              fontWeight: 900,
-              background:
-                selected === "hub"
-                  ? "linear-gradient(90deg, rgba(148,163,184,0.95), rgba(226,232,240,0.95))"
-                  : "linear-gradient(90deg, rgba(255,255,255,0.78), rgba(240,255,240,0.70))",
-              color: "rgba(22,90,60,0.95)",
-              boxShadow:
-                selected === "hub"
-                  ? "0 12px 26px rgba(0,0,0,0.18)"
-                  : "0 10px 22px rgba(0,0,0,0.12)",
+              fontWeight: 800,
+              background: "linear-gradient(90deg, #ffd9a8, #ffb870)",
+              color: "#8a4b00",
+              boxShadow: "0 8px 20px rgba(0,0,0,0.18)",
               transition: "all 160ms ease",
             }}
           >

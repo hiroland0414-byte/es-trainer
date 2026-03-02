@@ -13,12 +13,21 @@ const MODES: TopMode[] = [
 
 export default function Page() {
   const router = useRouter();
-  const [selected, setSelected] = useState<TopMode["key"] | null>(null);
+  const [selected, setSelected] = useState<TopMode["key"] | "hub" | null>(null);
 
   const go = (m: TopMode) => {
     setSelected(m.key);
     // “色が変わったのを見せてから”遷移
     window.setTimeout(() => router.push(m.route), 220);
+  };
+
+  // 追加：Hubへ戻る
+  const goHub = () => {
+    setSelected("hub");
+    const hubUrl = process.env.NEXT_PUBLIC_HUB_URL ?? "https://kc-lp.vercel.app";
+    window.setTimeout(() => {
+      window.location.href = hubUrl;
+    }, 220);
   };
 
   return (
@@ -87,7 +96,15 @@ export default function Page() {
           />
         </div>
 
-        <div style={{ textAlign: "center", fontSize: 20, fontWeight: 900, color: "#167a52", marginTop: 2 }}>
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: 20,
+            fontWeight: 900,
+            color: "#167a52",
+            marginTop: 2,
+          }}
+        >
           E.S.作成基礎トレーナー
         </div>
 
@@ -134,6 +151,34 @@ export default function Page() {
               </button>
             );
           })}
+        </div>
+
+        {/* 追加：アプリ選択へ（UIは“下に足すだけ”） */}
+        <div style={{ marginTop: 14 }}>
+          <button
+            onClick={goHub}
+            style={{
+              width: "100%",
+              padding: "14px 0",
+              borderRadius: 22,
+              border: "none",
+              cursor: "pointer",
+              fontSize: 14,
+              fontWeight: 900,
+              background:
+                selected === "hub"
+                  ? "linear-gradient(90deg, rgba(148,163,184,0.95), rgba(226,232,240,0.95))"
+                  : "linear-gradient(90deg, rgba(255,255,255,0.78), rgba(240,255,240,0.70))",
+              color: "rgba(22,90,60,0.95)",
+              boxShadow:
+                selected === "hub"
+                  ? "0 12px 26px rgba(0,0,0,0.18)"
+                  : "0 10px 22px rgba(0,0,0,0.12)",
+              transition: "all 160ms ease",
+            }}
+          >
+            アプリ選択へ
+          </button>
         </div>
 
         <div
