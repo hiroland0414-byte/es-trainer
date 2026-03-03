@@ -79,7 +79,11 @@ export default function Page() {
             </div>
           </div>
 
-          <RightHalfButton onClick={() => router.push("/hospital")}>職種選択へ</RightHalfButton>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+  <RightHalfButton onClick={() => router.push("/hospital")}>
+    職種選択へ
+  </RightHalfButton>
+</div>
         </Card>
       </Shell>
     );
