@@ -314,21 +314,23 @@ function RightHalfButton({
       onPointerUp={() => setPressed(false)}
       onPointerCancel={() => setPressed(false)}
       onPointerLeave={() => setPressed(false)}
-      style={{
-        width: "50%",
-        borderRadius: 18,
-        padding: "12px 12px",
-        border: "1px solid rgba(0,0,0,0.10)",
-        background: pressed ? pressedBg : baseBg,
-        fontWeight: 900,
-        color: "#0b3aa6", // 青で統一
-        cursor: "pointer",
-        marginTop: 12,
-        textAlign: "center",
-        boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
-        transform: pressed ? "scale(0.98)" : "scale(1)",
-        transition: "transform 120ms ease",
-      }}
+style={{
+  width: "50%",
+  borderRadius: 18,
+  padding: "12px 12px",
+  border: "1px solid rgba(0,0,0,0.10)",
+  background: pressed ? pressedBg : baseBg,
+  fontWeight: 900,
+  color: "#0b3aa6",
+  cursor: "pointer",
+  marginTop: 12,
+  marginLeft: "auto",   // ← 追加
+  display: "block",     // ← 追加
+  textAlign: "center",
+  boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
+  transform: pressed ? "scale(0.98)" : "scale(1)",
+  transition: "transform 120ms ease",
+}}
     >
       {children}
     </button>
