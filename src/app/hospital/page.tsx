@@ -242,6 +242,10 @@ function RightHalfButton({
         color: "#0b3aa6", // 青で統一
         cursor: "pointer",
         marginTop: 12,
+
+  marginLeft: "auto",   // ← 追加
+  display: "block",     // ← 追加（安全）
+
         textAlign: "center",
         boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
         transform: pressed ? "scale(0.98)" : "scale(1)",

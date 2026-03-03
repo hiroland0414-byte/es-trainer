@@ -133,7 +133,7 @@ function SelectButton({
   onClick,
 }: {
   label: string;
-  active: boolean;
+  active?: boolean;
   onClick: () => void;
 }) {
   return (
@@ -141,18 +141,16 @@ function SelectButton({
       onClick={onClick}
       style={{
         width: "100%",
+        height: 52,
         borderRadius: 18,
-        padding: "14px 12px",
-        border: "1px solid rgba(0,0,0,0.14)",
+        border: "1px solid rgba(0,0,0,0.12)",
         background: active
-          ? "rgba(22, 170, 120, 0.18)"
+          ? "rgba(22,122,82,0.16)"
           : "rgba(255,255,255,0.92)",
         fontWeight: 900,
+        fontSize: 24,   // ← ここを1.5倍（元が16なら24）
         color: "#167a52",
         cursor: "pointer",
-        marginTop: 10,
-        boxShadow: "0 10px 18px rgba(0,0,0,0.08)",
-        transition: "background 120ms ease",
       }}
     >
       {label}
