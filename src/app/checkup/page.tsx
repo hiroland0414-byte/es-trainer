@@ -151,7 +151,7 @@ function SelectButton({
           ? "rgba(22,122,82,0.16)"
           : "rgba(255,255,255,0.92)",
         fontWeight: 900,
-        fontSize: 20, // 1.5倍維持
+        fontSize: 18, // 1.5倍維持
         lineHeight: 1.1, // ★太字の詰まり軽減
         color: "#167a52",
         cursor: "pointer",
