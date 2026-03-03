@@ -12,17 +12,17 @@ export default function Page() {
   const go = (q: Q) => {
     setSelected(q);
 
-window.setTimeout(() => {
-  if (q === "motivation") {
-    router.push("/m/checkup_center_motivation_v1");
-  }
-  if (q === "selfPR") {
-    router.push("/m/checkup_center_pr_v1");
-  }
-  if (q === "gakuchika") {
-    router.push("/m/checkup_center_gakuchika_v1");
-  }
-  }, 140);
+    window.setTimeout(() => {
+      if (q === "motivation") {
+        router.push("/m/checkup_center_motivation_v1");
+      }
+      if (q === "selfPR") {
+        router.push("/m/checkup_center_pr_v1");
+      }
+      if (q === "gakuchika") {
+        router.push("/m/checkup_center_gakuchika_v1");
+      }
+    }, 140);
   };
 
   return (
@@ -38,21 +38,24 @@ window.setTimeout(() => {
         <div style={boxStyle()}>
           <div style={sectionTitleStyle()}>E.S.質問選択</div>
 
-          <SelectButton
-            label="志望動機"
-            active={selected === "motivation"}
-            onClick={() => go("motivation")}
-          />
-          <SelectButton
-            label="自己PR"
-            active={selected === "selfPR"}
-            onClick={() => go("selfPR")}
-          />
-          <SelectButton
-            label="ガクチカ"
-            active={selected === "gakuchika"}
-            onClick={() => go("gakuchika")}
-          />
+          {/* ★病院画面と同じ：ボタン間隔を gap で作る */}
+          <div style={{ display: "grid", gap: 12 }}>
+            <SelectButton
+              label="志望動機"
+              active={selected === "motivation"}
+              onClick={() => go("motivation")}
+            />
+            <SelectButton
+              label="自己PR"
+              active={selected === "selfPR"}
+              onClick={() => go("selfPR")}
+            />
+            <SelectButton
+              label="ガクチカ"
+              active={selected === "gakuchika"}
+              onClick={() => go("gakuchika")}
+            />
+          </div>
         </div>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -141,14 +144,15 @@ function SelectButton({
       onClick={onClick}
       style={{
         width: "100%",
-        height: 52,
+        height: 60, // ★文字を大きくした分、少しだけ高さを増やす（詰まり防止）
         borderRadius: 18,
         border: "1px solid rgba(0,0,0,0.12)",
         background: active
           ? "rgba(22,122,82,0.16)"
           : "rgba(255,255,255,0.92)",
         fontWeight: 900,
-        fontSize: 24,   // ← ここを1.5倍（元が16なら24）
+        fontSize: 24, // 1.5倍維持
+        lineHeight: 1.1, // ★太字の詰まり軽減
         color: "#167a52",
         cursor: "pointer",
       }}
@@ -186,7 +190,7 @@ function RightHalfButton({
         border: "1px solid rgba(0,0,0,0.10)",
         background: pressed ? pressedBg : baseBg,
         fontWeight: 900,
-        color: "#0b3aa6", // 青で統一
+        color: "#0b3aa6",
         cursor: "pointer",
         marginTop: 12,
         textAlign: "center",
@@ -231,7 +235,7 @@ function shellStyle(): React.CSSProperties {
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingTop: 18, // ≒5mm
+    paddingTop: 18,
     paddingLeft: 18,
     paddingRight: 18,
     paddingBottom: 20,
