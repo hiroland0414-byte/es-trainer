@@ -41,7 +41,9 @@ export default function Page() {
           />
         </div>
 
-        <RightHalfButton onClick={() => router.push("/")}>選択へ戻る</RightHalfButton>
+        <RightHalfButton onClick={() => router.push("/")}>
+          選択へ戻る
+        </RightHalfButton>
       </Card>
     </Shell>
   );
@@ -63,14 +65,16 @@ function Shell({ children }: { children: React.ReactNode }) {
         paddingLeft: 18,
         paddingRight: 18,
         paddingBottom: 20,
-        fontFamily: 'ui-sans-serif, system-ui, -apple-system, "Noto Sans JP", sans-serif',
+        fontFamily:
+          'ui-sans-serif, system-ui, -apple-system, "Noto Sans JP", sans-serif',
       }}
     >
       <div
         style={{
           position: "fixed",
           inset: 0,
-          background: "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.10))",
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.10))",
           pointerEvents: "none",
         }}
       />
@@ -87,7 +91,8 @@ function Card({ children }: { children: React.ReactNode }) {
         borderRadius: 30,
         padding: 18,
         paddingTop: 6,
-        background: "linear-gradient(180deg, rgba(255,255,255,0.94), rgba(220,255,220,0.88))",
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.94), rgba(220,255,220,0.88))",
         boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
         backdropFilter: "blur(6px)",
         border: "1px solid rgba(255,255,255,0.6)",
@@ -112,7 +117,13 @@ function Logo() {
       <img
         src="/logo.png"
         alt="logo"
-        style={{ width: "100%", height: 52, objectFit: "contain", display: "block", padding: "2px 0" }}
+        style={{
+          width: "100%",
+          height: 52,
+          objectFit: "contain",
+          display: "block",
+          padding: "2px 0",
+        }}
       />
     </div>
   );
@@ -120,7 +131,15 @@ function Logo() {
 
 function Title({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ textAlign: "center", fontSize: 18, fontWeight: 900, color: "#167a52", marginTop: 2 }}>
+    <div
+      style={{
+        textAlign: "center",
+        fontSize: 18,
+        fontWeight: 900,
+        color: "#167a52",
+        marginTop: 2,
+      }}
+    >
       {children}
     </div>
   );
@@ -145,7 +164,18 @@ function Desc({ children }: { children: React.ReactNode }) {
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
-  return <div style={{ fontWeight: 900, color: "#167a52", marginTop: 6, marginBottom: 8 }}>{children}</div>;
+  return (
+    <div
+      style={{
+        fontWeight: 900,
+        color: "#167a52",
+        marginTop: 6,
+        marginBottom: 8,
+      }}
+    >
+      {children}
+    </div>
+  );
 }
 
 function boxStyle(): React.CSSProperties {
@@ -159,7 +189,15 @@ function boxStyle(): React.CSSProperties {
   };
 }
 
-function SelectButton({ label, active, onClick }: { label: string; active?: boolean; onClick: () => void }) {
+function SelectButton({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active?: boolean;
+  onClick: () => void;
+}) {
   return (
     <button
       onClick={onClick}
@@ -180,22 +218,47 @@ function SelectButton({ label, active, onClick }: { label: string; active?: bool
   );
 }
 
-function RightHalfButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
+/**
+ * 右下の「戻る/選択へ」系ボタン
+ * - 薄いオレンジで統一
+ * - 押下時は “半分くらい薄い” へ（inlineでも再現）
+ */
+function RightHalfButton({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+}) {
+  const [pressed, setPressed] = useState(false);
+
+  const baseBg =
+    "linear-gradient(90deg, rgba(255,210,150,0.90), rgba(255,185,120,0.90))";
+  const pressedBg =
+    "linear-gradient(90deg, rgba(255,210,150,0.55), rgba(255,185,120,0.55))";
+
   return (
     <button
       onClick={onClick}
+      onPointerDown={() => setPressed(true)}
+      onPointerUp={() => setPressed(false)}
+      onPointerCancel={() => setPressed(false)}
+      onPointerLeave={() => setPressed(false)}
       style={{
         width: "50%",
         height: 46,
         borderRadius: 999,
-        border: "1px solid rgba(0,0,0,0.12)",
-        background: "rgba(255,255,255,0.82)",
+        border: "1px solid rgba(0,0,0,0.10)",
+        background: pressed ? pressedBg : baseBg,
         fontWeight: 900,
-        color: "#167a52",
+        color: "#0b3aa6", // 青で統一（視認性◎）
         marginTop: 14,
         marginLeft: "auto",
         display: "block",
         cursor: "pointer",
+        boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
+        transform: pressed ? "scale(0.98)" : "scale(1)",
+        transition: "transform 120ms ease, filter 120ms ease",
       }}
     >
       {children}

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-type Pick = "rt" | "nurse" | null;
+type Pick = "tech" | "sales" | null;
 
 export default function Page() {
   const router = useRouter();
@@ -12,7 +12,7 @@ export default function Page() {
   const go = (p: Exclude<Pick, null>) => {
     setSelected(p);
     window.setTimeout(() => {
-      router.push(`/hospital/${p}`); // ★ 中間ページへ（文章種別選択）
+      router.push(`/company/${p}`);
     }, 180);
   };
 
@@ -20,7 +20,7 @@ export default function Page() {
     <Shell>
       <Card>
         <Logo />
-        <Title>病院</Title>
+        <Title>企業</Title>
         <Desc>
           職種を選んでください。
           <br />
@@ -28,29 +28,26 @@ export default function Page() {
         </Desc>
 
         <SectionTitle>職種</SectionTitle>
-
         <div style={boxStyle()}>
           <SelectButton
-            label="診療放射線技師"
-            active={selected === "rt"}
-            onClick={() => go("rt")}
+            label="技術系"
+            active={selected === "tech"}
+            onClick={() => go("tech")}
           />
           <SelectButton
-            label="看護師"
-            active={selected === "nurse"}
-            onClick={() => go("nurse")}
+            label="営業系"
+            active={selected === "sales"}
+            onClick={() => go("sales")}
           />
         </div>
 
         <RightHalfButton onClick={() => router.push("/")}>選択へ戻る</RightHalfButton>
-
-        <Footnote>※ 「次へ」ボタンはありません。選択した瞬間に進みます。</Footnote>
       </Card>
     </Shell>
   );
 }
 
-/* UI（m/[modeId] と同系） */
+/* UI */
 function Shell({ children }: { children: React.ReactNode }) {
   return (
     <main
@@ -94,7 +91,6 @@ function Card({ children }: { children: React.ReactNode }) {
         boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
         backdropFilter: "blur(6px)",
         border: "1px solid rgba(255,255,255,0.6)",
-        position: "relative",
       }}
     >
       {children}
@@ -116,13 +112,7 @@ function Logo() {
       <img
         src="/logo.png"
         alt="logo"
-        style={{
-          width: "100%",
-          height: 52,
-          objectFit: "contain",
-          display: "block",
-          padding: "2px 0",
-        }}
+        style={{ width: "100%", height: 52, objectFit: "contain", display: "block", padding: "2px 0" }}
       />
     </div>
   );
@@ -130,15 +120,7 @@ function Logo() {
 
 function Title({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      style={{
-        textAlign: "center",
-        fontSize: 18,
-        fontWeight: 900,
-        color: "#167a52",
-        marginTop: 2,
-      }}
-    >
+    <div style={{ textAlign: "center", fontSize: 18, fontWeight: 900, color: "#167a52", marginTop: 2 }}>
       {children}
     </div>
   );
@@ -163,11 +145,7 @@ function Desc({ children }: { children: React.ReactNode }) {
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{ fontWeight: 900, color: "#167a52", marginTop: 6, marginBottom: 8 }}>
-      {children}
-    </div>
-  );
+  return <div style={{ fontWeight: 900, color: "#167a52", marginTop: 6, marginBottom: 8 }}>{children}</div>;
 }
 
 function boxStyle(): React.CSSProperties {
@@ -181,15 +159,7 @@ function boxStyle(): React.CSSProperties {
   };
 }
 
-function SelectButton({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active?: boolean;
-  onClick: () => void;
-}) {
+function SelectButton({ label, active, onClick }: { label: string; active?: boolean; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
@@ -203,7 +173,6 @@ function SelectButton({
         fontSize: 16,
         color: "#167a52",
         cursor: "pointer",
-        transition: "background 120ms ease",
       }}
     >
       {label}
@@ -211,52 +180,25 @@ function SelectButton({
   );
 }
 
-function RightHalfButton({
-  children,
-  onClick,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  const [pressed, setPressed] = React.useState(false);
-
-  const baseBg =
-    "linear-gradient(90deg, rgba(255,210,150,0.90), rgba(255,185,120,0.90))";
-  const pressedBg =
-    "linear-gradient(90deg, rgba(255,210,150,0.55), rgba(255,185,120,0.55))";
-
+function RightHalfButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      onPointerDown={() => setPressed(true)}
-      onPointerUp={() => setPressed(false)}
-      onPointerCancel={() => setPressed(false)}
-      onPointerLeave={() => setPressed(false)}
       style={{
         width: "50%",
-        borderRadius: 18,
-        padding: "12px 12px",
-        border: "1px solid rgba(0,0,0,0.10)",
-        background: pressed ? pressedBg : baseBg,
+        height: 46,
+        borderRadius: 999,
+        border: "1px solid rgba(0,0,0,0.12)",
+        background: "rgba(255,255,255,0.82)",
         fontWeight: 900,
-        color: "#0b3aa6", // 青で統一
+        color: "#167a52",
+        marginTop: 14,
+        marginLeft: "auto",
+        display: "block",
         cursor: "pointer",
-        marginTop: 12,
-        textAlign: "center",
-        boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
-        transform: pressed ? "scale(0.98)" : "scale(1)",
-        transition: "transform 120ms ease",
       }}
     >
       {children}
     </button>
-  );
-}
-
-function Footnote({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{ marginTop: 10, fontSize: 11, opacity: 0.72, textAlign: "center", lineHeight: 1.6 }}>
-      {children}
-    </div>
   );
 }

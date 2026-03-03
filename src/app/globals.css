@@ -40,3 +40,34 @@ a {
     color-scheme: dark;
   }
 }
+
+/* ============================= */
+/* 戻る・階層移動ボタン統一カラー */
+/* ============================= */
+.navBackBtn {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 210, 150, 0.9),
+    rgba(255, 185, 120, 0.9)
+  );
+  color: #7a3e00;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+  transition: all 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navBackBtn:hover {
+    filter: brightness(0.98);
+  }
+}
+
+.navBackBtn:active {
+  transform: scale(0.98);
+  /* 押した時は “半分くらい薄い” */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 210, 150, 0.55),
+    rgba(255, 185, 120, 0.55)
+  );
+}

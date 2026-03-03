@@ -499,22 +499,41 @@ function a4ButtonStyle(): React.CSSProperties {
   };
 }
 
-function RightHalfButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
+function RightHalfButton({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+}) {
+  const [pressed, setPressed] = React.useState(false);
+
+  const baseBg =
+    "linear-gradient(90deg, rgba(255,210,150,0.90), rgba(255,185,120,0.90))";
+  const pressedBg =
+    "linear-gradient(90deg, rgba(255,210,150,0.55), rgba(255,185,120,0.55))";
+
   return (
     <button
       onClick={onClick}
+      onPointerDown={() => setPressed(true)}
+      onPointerUp={() => setPressed(false)}
+      onPointerCancel={() => setPressed(false)}
+      onPointerLeave={() => setPressed(false)}
       style={{
         width: "50%",
-        height: 46,
-        borderRadius: 999,
-        border: "1px solid rgba(0,0,0,0.12)",
-        background: "rgba(255,255,255,0.82)",
+        borderRadius: 18,
+        padding: "12px 12px",
+        border: "1px solid rgba(0,0,0,0.10)",
+        background: pressed ? pressedBg : baseBg,
         fontWeight: 900,
-        color: "#167a52",
-        marginTop: 14,
-        marginLeft: "auto",
-        display: "block",
+        color: "#0b3aa6", // 青で統一
         cursor: "pointer",
+        marginTop: 12,
+        textAlign: "center",
+        boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
+        transform: pressed ? "scale(0.98)" : "scale(1)",
+        transition: "transform 120ms ease",
       }}
     >
       {children}
