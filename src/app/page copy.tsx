@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 type TopMode = { key: "hospital" | "checkup" | "company"; label: string; route: string };
 
 const MODES: TopMode[] = [
-  { key: "hospital", label: "病　　　　院", route: "/hospital" },
+  { key: "hospital", label: "病院", route: "/hospital" },
   { key: "checkup", label: "健診センター", route: "/checkup" },
-  { key: "company", label: "企　　　　業", route: "/company" },
+  { key: "company", label: "企業", route: "/company" },
 ];
 
 export default function Page() {
@@ -121,13 +121,13 @@ export default function Page() {
                   cursor: "pointer",
                   fontSize: 17,
                   fontWeight: 900,
-background: active
-  ? "linear-gradient(90deg, rgba(20,184,166,0.50), rgba(34,197,94,0.50))"
-  : "linear-gradient(90deg, rgba(255,255,255,0.90), rgba(240,255,240,0.85))",
+                  background: active
+                    ? "linear-gradient(90deg, rgba(20,184,166,0.95), rgba(34,197,94,0.95))"
+                    : "linear-gradient(90deg, rgba(255,255,255,0.90), rgba(240,255,240,0.85))",
                   color: active ? "white" : "#167a52",
-boxShadow: active
-  ? "0 10px 22px rgba(0,0,0,0.16)"
-  : "0 10px 22px rgba(0,0,0,0.14)",
+                  boxShadow: active
+                    ? "0 12px 26px rgba(0,0,0,0.22)"
+                    : "0 10px 22px rgba(0,0,0,0.14)",
                   transition: "all 160ms ease",
                 }}
               >
