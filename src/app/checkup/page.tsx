@@ -148,7 +148,7 @@ function SelectButton({
           ? "rgba(22,122,82,0.16)"
           : "rgba(255,255,255,0.92)",
         fontWeight: 900,
-        fontSize: 24,   // ← ここを1.5倍（元が16なら24）
+        fontSize: 20,   // ← ここを1.5倍（元が16なら24）
         color: "#167a52",
         cursor: "pointer",
       }}
