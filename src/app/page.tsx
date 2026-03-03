@@ -65,33 +65,30 @@ export default function Page() {
           border: "1px solid rgba(255,255,255,0.6)",
         }}
       >
-{/* ロゴ（丸み＋横に広げる） */}
-<div
-  style={{
-    width: "100%",
-    borderRadius: 28,
-    overflow: "hidden",
-    marginBottom: 14,
-    background: "linear-gradient(90deg, rgba(230,255,230,0.9), rgba(200,255,200,0.9))",
-    padding: "6px 10px",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
-  }}
->
-  <img
-    src="/logo.png"
-    alt="K-career"
-    style={{
-      width: "100%",
-      height: 64,
-      objectFit: "contain",
-      display: "block",
-    }}
-  />
-</div>
+        <div
+          style={{
+            width: "100%",
+            borderRadius: 14,
+            overflow: "hidden",
+            marginBottom: 8,
+            background: "rgba(255,255,255,0.55)",
+          }}
+        >
+          <img
+            src="/logo.png"
+            alt="K-career"
+            style={{
+              width: "100%",
+              height: 52,
+              objectFit: "contain",
+              display: "block",
+              padding: "2px 0",
+            }}
+          />
+        </div>
 
         <div style={{ textAlign: "center", fontSize: 20, fontWeight: 900, color: "#167a52", marginTop: 2 }}>
-          E.S.作成基礎トレーナー（β版）
-          )
+          E.S.作成基礎トレーナー
         </div>
 
         <div
