@@ -40,9 +40,7 @@ export default function Page() {
 
   const go = (docType: DocType) => {
     setSelected(docType);
-    const modeId =
-      MODE_BY_PROFESSION_AND_DOC[profession]?.[docType] ??
-      "company_tech_motivation_v1";
+    const modeId = MODE_BY_PROFESSION_AND_DOC[profession]?.[docType] ?? "company_tech_motivation_v1";
 
     window.setTimeout(() => {
       router.push(`/m/${modeId}`);
@@ -80,9 +78,7 @@ export default function Page() {
           />
         </div>
 
-        <RightHalfButton onClick={() => router.push("/company")}>
-          職種選択へ
-        </RightHalfButton>
+        <RightHalfButton onClick={() => router.push("/company")}>職種選択へ</RightHalfButton>
 
         <Footnote>
           ※ 「次へ」ボタンはありません。選択した瞬間に進みます。
@@ -110,16 +106,14 @@ function Shell({ children }: { children: React.ReactNode }) {
         paddingLeft: 18,
         paddingRight: 18,
         paddingBottom: 20,
-        fontFamily:
-          'ui-sans-serif, system-ui, -apple-system, "Noto Sans JP", sans-serif',
+        fontFamily: 'ui-sans-serif, system-ui, -apple-system, "Noto Sans JP", sans-serif',
       }}
     >
       <div
         style={{
           position: "fixed",
           inset: 0,
-          background:
-            "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.10))",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.10))",
           pointerEvents: "none",
         }}
       />
@@ -136,8 +130,7 @@ function Card({ children }: { children: React.ReactNode }) {
         borderRadius: 30,
         padding: 18,
         paddingTop: 6,
-        background:
-          "linear-gradient(180deg, rgba(255,255,255,0.94), rgba(220,255,220,0.88))",
+        background: "linear-gradient(180deg, rgba(255,255,255,0.94), rgba(220,255,220,0.88))",
         boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
         backdropFilter: "blur(6px)",
         border: "1px solid rgba(255,255,255,0.6)",
@@ -177,15 +170,7 @@ function Logo() {
 
 function Title({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      style={{
-        textAlign: "center",
-        fontSize: 18,
-        fontWeight: 900,
-        color: "#167a52",
-        marginTop: 2,
-      }}
-    >
+    <div style={{ textAlign: "center", fontSize: 18, fontWeight: 900, color: "#167a52", marginTop: 2 }}>
       {children}
     </div>
   );
@@ -210,11 +195,7 @@ function Desc({ children }: { children: React.ReactNode }) {
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{ fontWeight: 900, color: "#167a52", marginTop: 6, marginBottom: 8 }}>
-      {children}
-    </div>
-  );
+  return <div style={{ fontWeight: 900, color: "#167a52", marginTop: 6, marginBottom: 8 }}>{children}</div>;
 }
 
 function boxStyle(): React.CSSProperties {
@@ -293,10 +274,6 @@ function RightHalfButton({
         boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
         transform: pressed ? "scale(0.98)" : "scale(1)",
         transition: "transform 120ms ease",
-
-        // ★追加：右端寄せ（レイアウトだけ変更）
-        marginLeft: "auto",
-        display: "block",
       }}
     >
       {children}
