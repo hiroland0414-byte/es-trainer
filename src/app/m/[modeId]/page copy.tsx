@@ -192,9 +192,9 @@ export default function Page() {
                       </div>
                       <div style={{ fontWeight: 900, fontSize: 18 }}>{sc.score}</div>
                     </div>
-                    <div style={{ marginTop: 6, fontSize: 12, lineHeight: 1.6, opacity: 0.85, color: "#111" }}>
-                   {sc.reason}
-                   </div>
+                    <div style={{ marginTop: 6, fontSize: 12, lineHeight: 1.6, opacity: 0.85 }}>
+                      {sc.reason}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -400,7 +400,6 @@ function textareaStyle(): React.CSSProperties {
     fontSize: 14,
     lineHeight: 1.7,
     background: "rgba(255,255,255,0.92)",
-    color: "#111", // ← 追加
     outline: "none",
   };
 }
@@ -474,9 +473,9 @@ function FeedbackSection({ title, items }: { title: string; items: string[] }) {
     <div style={{ background: "rgba(230,255,245,0.65)", borderRadius: 14, padding: 10 }}>
       <div style={{ fontWeight: 900, color: "#0f6b49", marginBottom: 6 }}>{title}</div>
       {items.length === 0 ? (
-        <div style={{ fontSize: 12, opacity: 0.75, color: "#111" }}>（該当なし）</div>
+        <div style={{ fontSize: 12, opacity: 0.75 }}>（該当なし）</div>
       ) : (
-        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 13, color: "#111" }}>
+        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 13 }}>
           {items.map((x, i) => (
             <li key={i}>{x}</li>
           ))}
