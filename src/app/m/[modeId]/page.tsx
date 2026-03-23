@@ -97,15 +97,54 @@ export default function Page() {
     }
   };
 
-  const runEvaluate = () => {
-    setEvalActive(true);
-    window.setTimeout(() => {
-      const r = evaluateText(text, mode, personaId);
-      setResult(r);
-      saveResult(r);
-      setEvalActive(false);
-    }, 220);
-  };
+const runEvaluate = () => {
+  setEvalActive(true);
+
+  window.setTimeout(() => {
+    const r = evaluateText(text, mode, personaId);
+    setResult(r);
+    saveResult(r);
+
+    // ===== ★ここ追加（LP連携）=====
+    const getScore = (axisId: string) => {
+      const found = r.scores.find((s) => s.axisId === axisId);
+      return found?.score ?? 0;
+    };
+
+    const score = {
+      clarity: getScore("clarity"),
+      depth: getScore("logic"),     // ←ここ重要（後述）
+      action: getScore("action"),
+    };
+
+    const data = {
+      date: new Date().toISOString(),
+      type: "es",
+      answers: [text], // ESは1本なので配列化
+      action: "",
+      reflection: {},
+      score,
+    };
+
+    try {
+      const existing = JSON.parse(
+        localStorage.getItem("kcareer_portfolio") || "[]"
+      );
+
+      existing.push(data);
+
+      localStorage.setItem(
+        "kcareer_portfolio",
+        JSON.stringify(existing)
+      );
+    } catch (e) {
+      console.error("LP保存エラー", e);
+    }
+    // ===== ★ここまで =====
+
+    setEvalActive(false);
+  }, 220);
+};
 
   // タイトルは docType だけ表示（重複防止）
   const docTitle = useMemo(() => docTypeLabel(docType), [docType]);
@@ -141,9 +180,9 @@ export default function Page() {
               </option>
             ))}
           </select>
-          <div style={{ marginTop: 6, fontSize: 12, opacity: 0.82, lineHeight: 1.6 }}>
+          <div style={{ marginTop: 6, fontSize: 12, color: "#0b3aa6", opacity: 1, lineHeight: 1.6 }}>
             視点が変わると、同じ文章でも“刺さる順番”が変わります。
-          </div>
+         </div>
         </div>
 
         <SectionTitle>入力</SectionTitle>
@@ -179,20 +218,20 @@ export default function Page() {
             <RadarCard mode={mode} result={result} />
 
             <div style={resultCardStyle()}>
-              <div style={{ fontWeight: 900, color: "#167a52", marginBottom: 8 }}>
-                軸別（1～5／未構造のみ0）
+              <div style={{ fontWeight: 900, color: "#0b3aa6", marginBottom: 8 }}>
+                軸別（1～5／未構造のみ 0）
               </div>
 
               <div style={{ display: "grid", gap: 8 }}>
                 {result.scores.map((sc) => (
                   <div key={sc.axisId} style={axisRowStyle()}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                      <div style={{ fontWeight: 900 }}>
+                      <div style={{ fontWeight: 900, color: "#0b3aa6" }}>
                         {mode.axes.find((a) => a.axisId === sc.axisId)?.label}
-                      </div>
+                       </div>
                       <div style={{ fontWeight: 900, fontSize: 18 }}>{sc.score}</div>
                     </div>
-                    <div style={{ marginTop: 6, fontSize: 12, lineHeight: 1.6, opacity: 0.85, color: "#111" }}>
+                    <div style={{ marginTop: 6, fontSize: 12, lineHeight: 1.6, opacity: 1, color: "#0b3aa6" }}>
                    {sc.reason}
                    </div>
                   </div>
@@ -209,9 +248,9 @@ export default function Page() {
                 <button onClick={goA4} style={a4ButtonStyle()}>
                   赤ペンPDFを表示（A4）
                 </button>
-                <div style={{ marginTop: 6, fontSize: 12, opacity: 0.78, lineHeight: 1.6 }}>
+                <div style={{ marginTop: 6, fontSize: 12, color: "#0b3aa6", opacity: 1, lineHeight: 1.6 }}>
                   ※ 表示後に「ダウンロード」で端末に保存できます
-                </div>
+               </div>
               </div>
             </div>
           </div>
@@ -341,7 +380,7 @@ function Logo() {
 }
 
 function Title({ children }: { children: React.ReactNode }) {
-  return <div style={{ textAlign: "center", fontSize: 18, fontWeight: 900, color: "#167a52", marginTop: 2 }}>{children}</div>;
+  return <div style={{ textAlign: "center", fontSize: 18, fontWeight: 900, color: "#0b3aa6", marginTop: 2 }}>{children}</div>;
 }
 
 function Desc({ children }: { children: React.ReactNode }) {
@@ -351,7 +390,7 @@ function Desc({ children }: { children: React.ReactNode }) {
         textAlign: "center",
         fontSize: 12,
         fontWeight: 700,
-        color: "rgba(22,122,82,0.92)",
+        color: "#0b3aa6",
         marginTop: 6,
         marginBottom: 12,
         lineHeight: 1.7,
@@ -363,7 +402,7 @@ function Desc({ children }: { children: React.ReactNode }) {
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
-  return <div style={{ fontWeight: 900, color: "#167a52", marginTop: 6, marginBottom: 8 }}>{children}</div>;
+  return <div style={{ fontWeight: 900, color: "#0b3aa6", marginTop: 6, marginBottom: 8 }}>{children}</div>;
 }
 
 function boxStyle(): React.CSSProperties {
@@ -544,7 +583,7 @@ function RightHalfButton({
 
 function Footnote({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ marginTop: 10, fontSize: 11, opacity: 0.72, textAlign: "center", lineHeight: 1.6 }}>
+    <div style={{ marginTop: 10, fontSize: 11, color: "#0b3aa6", opacity: 1, textAlign: "center", lineHeight: 1.6 }}>
       {children}
     </div>
   );

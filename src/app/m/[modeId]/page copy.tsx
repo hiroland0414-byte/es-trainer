@@ -97,15 +97,54 @@ export default function Page() {
     }
   };
 
-  const runEvaluate = () => {
-    setEvalActive(true);
-    window.setTimeout(() => {
-      const r = evaluateText(text, mode, personaId);
-      setResult(r);
-      saveResult(r);
-      setEvalActive(false);
-    }, 220);
-  };
+const runEvaluate = () => {
+  setEvalActive(true);
+
+  window.setTimeout(() => {
+    const r = evaluateText(text, mode, personaId);
+    setResult(r);
+    saveResult(r);
+
+    // ===== ★ここ追加（LP連携）=====
+    const getScore = (axisId: string) => {
+      const found = r.scores.find((s) => s.axisId === axisId);
+      return found?.score ?? 0;
+    };
+
+    const score = {
+      clarity: getScore("clarity"),
+      depth: getScore("logic"),     // ←ここ重要（後述）
+      action: getScore("action"),
+    };
+
+    const data = {
+      date: new Date().toISOString(),
+      type: "es",
+      answers: [text], // ESは1本なので配列化
+      action: "",
+      reflection: {},
+      score,
+    };
+
+    try {
+      const existing = JSON.parse(
+        localStorage.getItem("kcareer_portfolio") || "[]"
+      );
+
+      existing.push(data);
+
+      localStorage.setItem(
+        "kcareer_portfolio",
+        JSON.stringify(existing)
+      );
+    } catch (e) {
+      console.error("LP保存エラー", e);
+    }
+    // ===== ★ここまで =====
+
+    setEvalActive(false);
+  }, 220);
+};
 
   // タイトルは docType だけ表示（重複防止）
   const docTitle = useMemo(() => docTypeLabel(docType), [docType]);
@@ -192,9 +231,9 @@ export default function Page() {
                       </div>
                       <div style={{ fontWeight: 900, fontSize: 18 }}>{sc.score}</div>
                     </div>
-                    <div style={{ marginTop: 6, fontSize: 12, lineHeight: 1.6, opacity: 0.85 }}>
-                      {sc.reason}
-                    </div>
+                    <div style={{ marginTop: 6, fontSize: 12, lineHeight: 1.6, opacity: 0.85, color: "#111" }}>
+                   {sc.reason}
+                   </div>
                   </div>
                 ))}
               </div>
@@ -400,6 +439,7 @@ function textareaStyle(): React.CSSProperties {
     fontSize: 14,
     lineHeight: 1.7,
     background: "rgba(255,255,255,0.92)",
+    color: "#111", // ← 追加
     outline: "none",
   };
 }
@@ -473,9 +513,9 @@ function FeedbackSection({ title, items }: { title: string; items: string[] }) {
     <div style={{ background: "rgba(230,255,245,0.65)", borderRadius: 14, padding: 10 }}>
       <div style={{ fontWeight: 900, color: "#0f6b49", marginBottom: 6 }}>{title}</div>
       {items.length === 0 ? (
-        <div style={{ fontSize: 12, opacity: 0.75 }}>（該当なし）</div>
+        <div style={{ fontSize: 12, opacity: 0.75, color: "#111" }}>（該当なし）</div>
       ) : (
-        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 13 }}>
+        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 13, color: "#111" }}>
           {items.map((x, i) => (
             <li key={i}>{x}</li>
           ))}
