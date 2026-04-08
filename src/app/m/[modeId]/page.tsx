@@ -102,7 +102,10 @@ const runEvaluate = () => {
 
   window.setTimeout(() => {
     const r = evaluateText(text, mode, personaId);
-    setResult(r);
+    setResult({
+  ...r,
+  scores: r.scores.map(s => ({ ...s })),
+});
     saveResult(r);
 
     // ===== ★ここ追加（LP連携）=====

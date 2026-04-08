@@ -49,8 +49,8 @@ export function RadarCard({ mode, result }: Props) {
       </div>
 
       <div style={{ width: "100%", height: 260 }}>
-        <ResponsiveContainer>
-          <RadarChart key={chartKey} data={data} outerRadius="80%">
+  <ResponsiveContainer key={chartKey}>
+    <RadarChart data={data} outerRadius="80%">
             <PolarGrid />
 
             <PolarAngleAxis
