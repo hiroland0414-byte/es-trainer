@@ -102,6 +102,9 @@ const runEvaluate = () => {
 
   window.setTimeout(() => {
     const r = evaluateText(text, mode, personaId);
+
+    console.log("RESULT", r);
+
     setResult({
   ...r,
   scores: r.scores.map(s => ({ ...s })),
