@@ -20,17 +20,17 @@ export function RadarCard({ mode, result }: Props) {
   // 🔥 useMemo削除 → 毎回確実に再計算
   const scores = Array.isArray(result?.scores) ? result.scores : [];
 
-  const data = scores.map((s) => {
-    const axis = mode.axes.find((a) => a.axisId === s.axisId);
-    const label = axis?.label ?? String(s.axisId ?? "");
+const data = scores.map((s) => {
+  const axis = mode.axes.find((a) => a.axisId === s.axisId);
+  const label = axis?.label ?? String(s.axisId ?? "");
 
-    const safeValue = Number(s?.score ?? 0);
+  const safeValue = Number(s?.score ?? 0);
 
-    return {
-      subject: shortenLabel(label),
-      value: isNaN(safeValue) ? 0 : safeValue,
-    };
-  });
+  return {
+    subject: shortenLabel(label),
+    value: isNaN(safeValue) ? 1 : Math.max(1, safeValue),
+  };
+});
 
   console.log("data", data);
 console.log("scores", result?.scores);
@@ -51,8 +51,8 @@ console.log("scores", result?.scores);
         構造レーダー（補助）
       </div>
 
- <div style={{ width: "100%", height: 260 }} key={chartKey}>
-  <ResponsiveContainer>
+<div style={{ width: "100%", height: 260 }} key={chartKey}>
+  <ResponsiveContainer width="100%" height={260}>
     <RadarChart data={data} outerRadius="80%">
             <PolarGrid />
 
