@@ -32,6 +32,9 @@ export function RadarCard({ mode, result }: Props) {
     };
   });
 
+  console.log("data", data);
+console.log("scores", result?.scores);
+
   // 🔥 これが超重要：データ変化で強制再描画
   const chartKey = JSON.stringify(data);
 
