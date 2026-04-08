@@ -103,7 +103,10 @@ const runEvaluate = () => {
   window.setTimeout(() => {
     const r = evaluateText(text, mode, personaId);
 
-    console.log("RESULT", r);
+    console.log("①TEXT", text);
+console.log("②MODE.axes", mode?.axes);
+console.log("③PERSONA", personaId);
+console.log("④RESULT", r);
 
     setResult({
   ...r,
