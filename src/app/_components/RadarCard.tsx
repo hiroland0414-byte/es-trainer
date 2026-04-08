@@ -48,8 +48,8 @@ export function RadarCard({ mode, result }: Props) {
         構造レーダー（補助）
       </div>
 
-      <div style={{ width: "100%", height: 260 }}>
-  <ResponsiveContainer key={chartKey}>
+ <div style={{ width: "100%", height: 260 }} key={chartKey}>
+  <ResponsiveContainer>
     <RadarChart data={data} outerRadius="80%">
             <PolarGrid />
 
