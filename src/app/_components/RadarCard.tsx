@@ -18,12 +18,22 @@ type Props = {
 
 export function RadarCard({ mode, result }: Props) {
   const data = useMemo(() => {
-    return result.scores.map((s) => {
+    // 🔍 デバッグ（必要なら残す）
+    console.log("result", result);
+
+    // scoresが壊れていても落ちないように防御
+    const scores = Array.isArray(result?.scores) ? result.scores : [];
+
+    return scores.map((s) => {
       const axis = mode.axes.find((a) => a.axisId === s.axisId);
-      const label = axis?.label ?? String(s.axisId);
+      const label = axis?.label ?? String(s.axisId ?? "");
+
+      // 💥 ここが今回の核心修正
+      const safeValue = Number(s?.score ?? 0);
+
       return {
         subject: shortenLabel(label),
-        value: s.score,
+        value: isNaN(safeValue) ? 0 : safeValue,
       };
     });
   }, [mode, result]);
@@ -46,7 +56,6 @@ export function RadarCard({ mode, result }: Props) {
           <RadarChart data={data} outerRadius="80%">
             <PolarGrid />
 
-            {/* 角度軸：ラベル欠け対策で短縮 */}
             <PolarAngleAxis
               dataKey="subject"
               tick={{
@@ -56,7 +65,6 @@ export function RadarCard({ mode, result }: Props) {
               }}
             />
 
-            {/* 数値軸：0〜5固定、整数のみ、表示の傾き対策 */}
             <PolarRadiusAxis
               angle={90}
               domain={[0, 5]}
@@ -87,7 +95,7 @@ export function RadarCard({ mode, result }: Props) {
   );
 }
 
-/** 320pxでも欠けにくいように短縮（全角想定で控えめ） */
+/** ラベル短縮（安全版） */
 function shortenLabel(label: string) {
   const s = (label ?? "").trim();
   if (!s) return "";
