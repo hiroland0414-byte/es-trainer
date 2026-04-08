@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import {
   RadarChart,
   Radar,
@@ -17,26 +17,23 @@ type Props = {
 };
 
 export function RadarCard({ mode, result }: Props) {
-  const data = useMemo(() => {
-    // 🔍 デバッグ（必要なら残す）
-    console.log("result", result);
+  // 🔥 useMemo削除 → 毎回確実に再計算
+  const scores = Array.isArray(result?.scores) ? result.scores : [];
 
-    // scoresが壊れていても落ちないように防御
-    const scores = Array.isArray(result?.scores) ? result.scores : [];
+  const data = scores.map((s) => {
+    const axis = mode.axes.find((a) => a.axisId === s.axisId);
+    const label = axis?.label ?? String(s.axisId ?? "");
 
-    return scores.map((s) => {
-      const axis = mode.axes.find((a) => a.axisId === s.axisId);
-      const label = axis?.label ?? String(s.axisId ?? "");
+    const safeValue = Number(s?.score ?? 0);
 
-      // 💥 ここが今回の核心修正
-      const safeValue = Number(s?.score ?? 0);
+    return {
+      subject: shortenLabel(label),
+      value: isNaN(safeValue) ? 0 : safeValue,
+    };
+  });
 
-      return {
-        subject: shortenLabel(label),
-        value: isNaN(safeValue) ? 0 : safeValue,
-      };
-    });
-  }, [mode, result]);
+  // 🔥 これが超重要：データ変化で強制再描画
+  const chartKey = JSON.stringify(data);
 
   return (
     <div
@@ -53,7 +50,7 @@ export function RadarCard({ mode, result }: Props) {
 
       <div style={{ width: "100%", height: 260 }}>
         <ResponsiveContainer>
-          <RadarChart data={data} outerRadius="80%">
+          <RadarChart key={chartKey} data={data} outerRadius="80%">
             <PolarGrid />
 
             <PolarAngleAxis
@@ -83,6 +80,7 @@ export function RadarCard({ mode, result }: Props) {
               stroke="#1ba97a"
               fill="#1ba97a"
               fillOpacity={0.35}
+              isAnimationActive={false} // 🔥 これも重要（崩れ防止）
             />
           </RadarChart>
         </ResponsiveContainer>
