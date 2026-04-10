@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { setDocType } from "@/lib/usage/docTypeSession";
+import type { DocType } from "@/domain/types/models";
 
 type Q = "motivation" | "selfPR" | "gakuchika";
 
@@ -9,21 +11,29 @@ export default function Page() {
   const router = useRouter();
   const [selected, setSelected] = useState<Q | null>(null);
 
-  const go = (q: Q) => {
-    setSelected(q);
+const go = (q: Q) => {
+  setSelected(q);
 
-    window.setTimeout(() => {
-      if (q === "motivation") {
-        router.push("/m/checkup_center_motivation_v1");
-      }
-      if (q === "selfPR") {
-        router.push("/m/checkup_center_pr_v1");
-      }
-      if (q === "gakuchika") {
-        router.push("/m/checkup_center_gakuchika_v1");
-      }
-    }, 140);
-  };
+const map: Record<Q, DocType> = {
+  motivation: "motivation",
+  selfPR: "self_pr",
+  gakuchika: "gakuchika",
+};
+
+setDocType(map[q]);
+
+  window.setTimeout(() => {
+    if (q === "motivation") {
+      router.push("/m/checkup_center_motivation_v1");
+    }
+    if (q === "selfPR") {
+      router.push("/m/checkup_center_pr_v1");
+    }
+    if (q === "gakuchika") {
+      router.push("/m/checkup_center_gakuchika_v1");
+    }
+  }, 140);
+};
 
   return (
     <main style={shellStyle()}>
