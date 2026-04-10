@@ -23,12 +23,16 @@ export function evaluate(
       ? priorityAxes
       : persona?.priorityAxes) ?? ["clarity", "specificity", "logic", "contribution", "fit"];
 
-  let resolvedDocType: DocType = (docType ?? "motivation") as DocType;
+let resolvedDocType: DocType = (docType ?? "motivation") as DocType;
 
-// ★ ここを追加（健診センターの自己PRを強制補正）
 if (modeId.includes("checkup_center") && modeId.includes("_pr_")) {
   resolvedDocType = "self_pr";
 }
 
-  return scoreText(modeId, raw, personaId, resolvedPriorityAxes, resolvedDocType);
+// ★ ここに追加
+console.log("raw length:", raw.length, raw);
+console.log("modeId:", modeId);
+console.log("docType:", resolvedDocType);
+
+return scoreText(modeId, raw, personaId, resolvedPriorityAxes, resolvedDocType);
 }
