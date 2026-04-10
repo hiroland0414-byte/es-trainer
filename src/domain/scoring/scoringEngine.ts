@@ -23,16 +23,7 @@ export function evaluate(
       ? priorityAxes
       : persona?.priorityAxes) ?? ["clarity", "specificity", "logic", "contribution", "fit"];
 
-let resolvedDocType: DocType = (docType ?? "motivation") as DocType;
+  const resolvedDocType: DocType = (docType ?? "motivation") as DocType;
 
-if (modeId.includes("checkup_center") && modeId.includes("_pr_")) {
-  resolvedDocType = "self_pr";
-}
-
-// ★ ここに追加
-console.log("raw length:", raw.length, raw);
-console.log("modeId:", modeId);
-console.log("docType:", resolvedDocType);
-
-return scoreText(modeId, raw, personaId, resolvedPriorityAxes, resolvedDocType);
+  return scoreText(modeId, raw, personaId, resolvedPriorityAxes, resolvedDocType);
 }

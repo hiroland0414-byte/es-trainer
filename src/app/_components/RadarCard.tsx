@@ -28,7 +28,7 @@ const data = scores.map((s) => {
 
   return {
     subject: shortenLabel(label),
-    value: isNaN(safeValue) ? 0 : safeValue,
+    value: isNaN(safeValue) ? 1 : Math.max(1, safeValue),
   };
 });
 
