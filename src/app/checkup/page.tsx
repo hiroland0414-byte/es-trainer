@@ -27,7 +27,7 @@ setDocType(map[q]);
       router.push("/m/checkup_center_motivation_v1");
     }
     if (q === "selfPR") {
-      router.push("/m/checkup_center_self_pr_v1");
+      router.push("/m/checkup_center_pr_v1");
     }
     if (q === "gakuchika") {
       router.push("/m/checkup_center_gakuchika_v1");
