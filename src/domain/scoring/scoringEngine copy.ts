@@ -23,12 +23,7 @@ export function evaluate(
       ? priorityAxes
       : persona?.priorityAxes) ?? ["clarity", "specificity", "logic", "contribution", "fit"];
 
-  let resolvedDocType: DocType = (docType ?? "motivation") as DocType;
-
-// ★ ここを追加（健診センターの自己PRを強制補正）
-if (modeId.includes("checkup_center") && modeId.includes("_pr_")) {
-  resolvedDocType = "self_pr";
-}
+  const resolvedDocType: DocType = (docType ?? "motivation") as DocType;
 
   return scoreText(modeId, raw, personaId, resolvedPriorityAxes, resolvedDocType);
 }
