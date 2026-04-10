@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { setDocType } from "@/lib/usage/docTypeSession";
 
 type Profession = "tech" | "sales";
 type DocType = "motivation" | "self_pr" | "gakuchika";
@@ -38,16 +39,20 @@ export default function Page() {
     return "";
   }, [profession]);
 
-  const go = (docType: DocType) => {
-    setSelected(docType);
-    const modeId =
-      MODE_BY_PROFESSION_AND_DOC[profession]?.[docType] ??
-      "company_tech_motivation_v1";
+const go = (docType: DocType) => {
+  setSelected(docType);
 
-    window.setTimeout(() => {
-      router.push(`/m/${modeId}`);
-    }, 180);
-  };
+  // ★これを追加（超重要）
+  setDocType(docType);
+
+  const modeId =
+    MODE_BY_PROFESSION_AND_DOC[profession]?.[docType] ??
+    "company_tech_motivation_v1";
+
+  window.setTimeout(() => {
+    router.push(`/m/${modeId}`);
+  }, 180);
+};
 
   return (
     <Shell>
