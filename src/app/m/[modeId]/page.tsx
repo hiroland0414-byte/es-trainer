@@ -108,9 +108,9 @@ console.log("②MODE.axes", mode?.axes);
 console.log("③PERSONA", personaId);
 console.log("④RESULT", r);
 
-    setResult({
+setResult({
   ...r,
-  scores: r.scores.map(s => ({ ...s })),
+  scores: r.scores.map(s => ({ ...s })), // ← これ
 });
     saveResult(r);
 

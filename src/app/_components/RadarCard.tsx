@@ -32,7 +32,8 @@ const data = scores.map((s) => {
   };
 });
 
-  console.log("data", data);
+// 👇 ここに追加
+console.log("data", data);
 console.log("scores", result?.scores);
 
   // 🔥 これが超重要：データ変化で強制再描画
@@ -51,9 +52,9 @@ console.log("scores", result?.scores);
         構造レーダー（補助）
       </div>
 
-<div style={{ width: "100%", height: 260 }} key={chartKey}>
-  <ResponsiveContainer width="100%" height={260}>
-    <RadarChart data={data} outerRadius="80%">
+      <div style={{ width: "100%", height: 260 }}>
+        <ResponsiveContainer>
+          <RadarChart key={chartKey} data={data} outerRadius="80%">
             <PolarGrid />
 
             <PolarAngleAxis
